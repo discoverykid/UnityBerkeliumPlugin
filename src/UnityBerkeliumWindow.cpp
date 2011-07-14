@@ -16,7 +16,7 @@
 
 UnityBerkeliumWindow::UnityBerkeliumWindow(int uniqueID, float *buffer, bool transparency, int width, int height, const string &url)
 : m_id(uniqueID), m_buffer(buffer), m_transparency(transparency), m_width(width), m_height(height), m_url(url)
-, m_setPixelsFunc(0), m_applyTextureFunc(0), m_externalHostFunc(0)
+, m_setPixelsFunc(0), m_applyTextureFunc(0), m_externalHostFunc(0), m_loadingStateChangedFunc(0)
 {
 	assert(m_buffer);
 	assert(width > 0 && height > 0);
@@ -55,6 +55,11 @@ void UnityBerkeliumWindow::setPaintFunctions(SetPixelsFunc setPixelsFunc, ApplyT
 void UnityBerkeliumWindow::setExternalHostCallback(ExternalHostFunc callback)
 {
 	m_externalHostFunc = callback;
+}
+
+void UnityBerkeliumWindow::setLoadingStateChanged(LoadingStateChangedFunc callback)
+{
+	m_loadingStateChangedFunc = callback;
 }
 
 
@@ -226,6 +231,10 @@ void UnityBerkeliumWindow::onLoadingStateChanged(Berkelium::Window *win, bool is
 {
 	cerr << "[UnityBerkeliumWindow] onLoadingStateChanged called (window: " << win << ")" << endl;
 	cerr << "  isLoading: " << (isLoading? "yes" : "no") << endl;
+	if (m_loadingStateChangedFunc)
+	{
+		m_loadingStateChangedFunc(isLoading);
+	}
 }
 
 void UnityBerkeliumWindow::onTitleChanged(Berkelium::Window *win, Berkelium::WideString title)

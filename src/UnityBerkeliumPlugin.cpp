@@ -234,3 +234,10 @@ PLUGIN_API const wchar_t *Berkelium_Window_getLastExternalHostMessage(int window
 	else
 		return L"";
 }
+
+PLUGIN_API void Berkelium_Window_setLoadingStateChanged(int windowID, UnityBerkeliumWindow::LoadingStateChangedFunc callback)
+{
+	UnityBerkeliumWindow *pWindow = getWindow(windowID);
+	if(pWindow)
+		pWindow->setLoadingStateChanged(callback);
+}

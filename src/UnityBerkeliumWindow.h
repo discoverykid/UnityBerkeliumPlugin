@@ -29,6 +29,9 @@ public:
 	// The callback function that is called from a javascript externalHost call
 	typedef void (*ExternalHostFunc)(/*const wchar_t *message*/);
 
+	// callback for OnLoadingStateChanged
+	typedef void (__stdcall * LoadingStateChangedFunc)(bool isLoading);
+
 	// Constructors and destructor
 	UnityBerkeliumWindow(int uniqueID, float *buffer, bool transparency, int width, int height, const string &url);
 	virtual ~UnityBerkeliumWindow();
@@ -42,6 +45,7 @@ public:
 	// Callbacks
 	void setPaintFunctions(SetPixelsFunc setPixelsFunc, ApplyTextureFunc applyTextureFunc);
 	void setExternalHostCallback(ExternalHostFunc callback);
+	void setLoadingStateChanged(LoadingStateChangedFunc callback);
 
 	// Current paint info
 	const Berkelium::Rect &getLastDirtyRect() const { return m_lastDirtyRect; }
@@ -95,6 +99,8 @@ protected:
 
 	ExternalHostFunc m_externalHostFunc;
 	std::wstring m_lastExternalHostMessage;
+
+	LoadingStateChangedFunc m_loadingStateChangedFunc;
 };
 
 #endif // UNITYBERKELIUMWINDOW_H
