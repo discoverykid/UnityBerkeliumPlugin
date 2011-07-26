@@ -274,7 +274,7 @@ void UnityBerkeliumWindow::onExternalHost(Berkelium::Window *win, Berkelium::Wid
 	if(m_externalHostFunc)
 	{
 		m_lastExternalHostMessage = std::wstring(message.data(), message.length());
-		m_externalHostFunc(/*message.data()*/);
+		m_externalHostFunc(message.data());
 	}
 }
 

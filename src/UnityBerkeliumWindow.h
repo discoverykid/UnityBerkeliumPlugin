@@ -27,7 +27,7 @@ public:
 	typedef void (*ApplyTextureFunc)();
 
 	// The callback function that is called from a javascript externalHost call
-	typedef void (*ExternalHostFunc)(/*const wchar_t *message*/);
+	typedef void (__stdcall *ExternalHostFunc)(const wchar_t *message);
 
 	// callback for OnLoadingStateChanged
 	typedef void (__stdcall * LoadingStateChangedFunc)(bool isLoading);
